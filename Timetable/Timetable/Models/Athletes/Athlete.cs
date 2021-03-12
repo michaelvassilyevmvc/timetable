@@ -13,8 +13,6 @@ namespace Timetable.Models.Athletes
         public string LName { get; set; }
         public string FName { get; set; }
         public string FullName { get { return $"{LName} {FName}"; } }
-        public int LearningGroupId { get; set; }
-        public LearningGroup LearningGroup { get; set; }
 
     }
 }

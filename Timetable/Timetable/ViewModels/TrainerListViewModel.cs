@@ -5,42 +5,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Timetable.Models.Trainers;
+using Xamarin.Forms;
+
 
 namespace Timetable.ViewModels
 {
     public class TrainerListViewModel : INotifyPropertyChanged
     {
         private List<Trainer> _trainers;
+        private List<Trainer> _searchTrainers;
 
         public List<Trainer> Trainers { get { return this._trainers; } set {
                 _trainers = value;
                 this.OnPropertyChanged("Trainers");
             } }
 
-        public TrainerListViewModel()
+        public List<Trainer> SearchTrainers
         {
-            this.Trainers = GetTrainers();
+            get { return this._searchTrainers; }
+            set { this._searchTrainers = value; this.OnPropertyChanged("SearchTrainers"); }
         }
 
-        public List<Trainer> GetTrainers()
+
+        public TrainerListViewModel()
         {
-            return new List<Trainer>
-            {
-                new Trainer{Id=1,LName="Заичков",  FName="Дмитрий"},
-                new Trainer{Id=2,LName="Петров",   FName="Павел"},
-                new Trainer{Id=3,LName="Жайлыбаев",FName="Жарас"},
-                new Trainer{Id=4,LName="Тунгышбай",FName="Омиртай"},
-                new Trainer{Id=5,LName="Карпенко", FName="Михаил"},
-                new Trainer{Id=6,LName="Гребешков",FName="Дмитрий"},
-                new Trainer{Id=7,LName="Иванов",   FName="Иван"},
-                new Trainer{Id=8,LName="Глазунов", FName="Валерий"},
-                new Trainer{Id=9,LName="Андреева",FName="Елизаветта"},
-                new Trainer{Id=10,LName="Иванов",FName="Иван"},
-                new Trainer{Id=11,LName="Борадулин",FName="Роман"},
-                new Trainer{Id=12,LName="Плеханов",FName="Павел"},
-                new Trainer{Id=13,LName="Смаилов",FName="Арман"},
-                new Trainer{Id=14,LName="Исин",FName="Айдар"}
-            };
+            this.Trainers = Repository.Repository.GetTrainers();
+        }
+
+        public void elSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.SearchTrainers = this.Trainers.Where(a => a.FullName.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

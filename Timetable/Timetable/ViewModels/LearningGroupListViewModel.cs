@@ -5,43 +5,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Timetable.Models.LearningGroups;
+using Timetable.Models.Athletes;
+using Timetable.Models.Trainers;
+using Xamarin.Forms;
+
 
 namespace Timetable.ViewModels
 {
     public class LearningGroupListViewModel : INotifyPropertyChanged
     {
         private List<LearningGroup> _learningGroups;
+        private List<LearningGroup> _searchTrainers;
 
-        public List<LearningGroup> LearningGroups { get { return this._learningGroups; } set {
+        public List<LearningGroup> LearningGroups { 
+            get { 
+                return this._learningGroups; 
+            } 
+            set {
                 _learningGroups = value;
                 this.OnPropertyChanged("LearningGroups");
-            } }
+            }
+        }
+        public List<LearningGroup> SearchLearningGroups
+        {
+            get { return this._searchTrainers; }
+            set { this._searchTrainers = value; this.OnPropertyChanged("SearchLearningGroups"); }
+        }
 
         public LearningGroupListViewModel()
         {
-            this.LearningGroups = GetLearningGroups();
+            this.LearningGroups = Repository.Repository.GetLearningGroups();
+            var trainers = Repository.Repository.GetTrainers();
+            var athletes = Repository.Repository.GetAthletes();
         }
 
-        public List<LearningGroup> GetLearningGroups()
+        public void elSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
-            return new List<LearningGroup>
-            {
-                new LearningGroup{Id=1,Name="ДЮСШ-1"},
-                new LearningGroup{Id=2,Name="ДЮСШ-2"},
-                new LearningGroup{Id=3,Name="ДЮСШ-3"},
-                new LearningGroup{Id=4,Name="ДЮСШ-4"},
-                new LearningGroup{Id=5,Name="ДЮСШ-5"},
-                new LearningGroup{Id=6,Name="ДЮСШ-6"},
-                new LearningGroup{Id=7,Name="НП-1"},
-                new LearningGroup{Id=8,Name="НП-2"},
-                new LearningGroup{Id=9,Name="НП-3"},
-                new LearningGroup{Id=10,Name="УТГ1"},
-                new LearningGroup{Id=11,Name="УТГ2"},
-                new LearningGroup{Id=12,Name="УТГ3"},
-                new LearningGroup{Id=13,Name="УТГ4"},
-                new LearningGroup{Id=14,Name="УТГ5"} 
-            };
+            this.SearchLearningGroups = this.LearningGroups.Where(a => a.Name.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
         }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propName)
