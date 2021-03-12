@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Timetable.Views.AthletesPage"
+             Title="Спортсмены">
+    <ContentPage.Content>
+        <StackLayout>
+            <Picker ItemsSource="{Binding LearningGroups}" 
+                    ItemDisplayBinding="{Binding Name}" 
+                    x:Name="pckLearningGroup" Title="Фильтр групп" 
+                    SelectedIndexChanged="pckLearningGroup_SelectedIndexChanged">
+            </Picker>
+            <SearchBar x:Name="elSearch" CancelButtonColor="Red" Placeholder="Поиск..." 
+                       HorizontalTextAlignment="Center" TextChanged="elSearch_TextChanged"
+                       ></SearchBar>
+            <ListView x:Name="lstAthletes" ItemsSource="{Binding Athletes}" Margin="20">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout>
+                                    <Label Text="{Binding LName}"></Label>
+                                </StackLayout>
+                                <StackLayout>
+                                    <Label Text="{Binding FName}"></Label>
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>  

@@ -12,7 +12,5 @@ namespace Timetable.Models.Trainers
         public string FName { get; set; }
         public string LName { get; set; }
         public string FullName { get { return $"{LName} {FName}"; } }
-        public int LearningGroupId { get; set; }
-        public LearningGroup LearningGroup { get; set; }
     }
 }
