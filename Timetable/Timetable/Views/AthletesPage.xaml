@@ -5,19 +5,21 @@
              Title="Спортсмены">
     <ContentPage.Content>
         <StackLayout>
-            <Picker ItemsSource="{Binding LearningGroups}" 
+            <Picker ItemsSource="{Binding LearningGroups}" Margin="10"
                     ItemDisplayBinding="{Binding Name}" 
-                    x:Name="pckLearningGroup" Title="Фильтр групп" 
+                    x:Name="pckLearningGroup" Title="Выберите группу..."
                     SelectedIndexChanged="pckLearningGroup_SelectedIndexChanged">
             </Picker>
             <SearchBar x:Name="elSearch" CancelButtonColor="Red" Placeholder="Поиск..." 
                        HorizontalTextAlignment="Center" TextChanged="elSearch_TextChanged"
                        ></SearchBar>
-            <ListView x:Name="lstAthletes" ItemsSource="{Binding Athletes}" Margin="20">
+            <ListView x:Name="lstAthletes" ItemsSource="{Binding AthleteGroups}" 
+                      GroupDisplayBinding="{Binding Name}" 
+                      IsGroupingEnabled="True" Margin="20" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal">
+                            <StackLayout Orientation="Horizontal" Padding="30,0,0,0" VerticalOptions="CenterAndExpand">
                                 <StackLayout>
                                     <Label Text="{Binding LName}"></Label>
                                 </StackLayout>
