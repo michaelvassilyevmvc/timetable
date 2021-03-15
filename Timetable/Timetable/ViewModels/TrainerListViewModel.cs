@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Timetable.Models.Trainers;
+using Timetable.Repository;
 using Xamarin.Forms;
 
 
@@ -12,6 +13,7 @@ namespace Timetable.ViewModels
 {
     public class TrainerListViewModel : INotifyPropertyChanged
     {
+        public IRepository _repository { get; set; }
         private List<Trainer> _trainers;
         private List<Trainer> _searchTrainers;
 
@@ -29,7 +31,8 @@ namespace Timetable.ViewModels
 
         public TrainerListViewModel()
         {
-            this.Trainers = Repository.Repository.GetTrainers();
+            this._repository = new RepositoryContext();
+            this.Trainers = this._repository.GetTrainers();
         }
 
         public void elSearch_TextChanged(object sender, TextChangedEventArgs e)

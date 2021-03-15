@@ -17,6 +17,7 @@ namespace Timetable.Views
             InitializeComponent();
             BindingContext = athleteViewModel;
             this.Title = athleteViewModel.Athlete.FullName;
+            athleteViewModel.SetToolBars(this);
         }
     }
 }

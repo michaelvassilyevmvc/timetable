@@ -49,6 +49,6 @@ namespace Timetable.Views
             var athlete = e.Item as Athlete;
             var athleteViewModel = new AthleteViewModel(athlete);
             this.Navigation.PushAsync(new AthleteDetailPage(athleteViewModel));
-    }
+        }
     }
 }

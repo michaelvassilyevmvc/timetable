@@ -1,9 +1,68 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fUtils="clr-namespace:Timetable.Utils.Converters"
+             xmlns:ctrl="clr-namespace:Timetable.Utils.Controls"
              x:Class="Timetable.Views.AthleteDetailPage">
+    <!--<ContentPage.Resources>
+        <ResourceDictionary>
+            <fUtils:DateTimeToShortDateConverter x:Key="dateConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>-->
     <ContentPage.Content>
        <StackLayout>
-       </StackLayout>
+            <ctrl:FrameShadow>
+                <Label Text="Личное расписание" HorizontalOptions="CenterAndExpand"></Label>
+            </ctrl:FrameShadow>
+           
+            <ctrl:FrameShadow Margin="0, 0, 0, 5" Padding="0,15,0,15" HasShadow="False">
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" >
+                    <Button Text="" Image="ico_arrow_left.png"  WidthRequest="24" HeightRequest="24" BackgroundColor="Transparent" Margin="0,0,20,0" Command="{Binding Path=doPreviousMonth}" CommandParameter="{Binding .}"/>
+                    <Label Text="{Binding CurentMonthTitle}"  HorizontalOptions="Center" FontSize="Medium" FontAttributes="Bold" IsVisible="True"/>
+                    <Button Text="" Image="ico_arrow_right.png"  WidthRequest="24" HeightRequest="24" BackgroundColor="Transparent" Margin="20,0,0,0" Command="{Binding Path=doNextMonth}" CommandParameter="{Binding .}"/>
+                </StackLayout>
+
+            </ctrl:FrameShadow>
+           
+            <SearchBar x:Name="elSearch" CancelButtonColor="Red" Placeholder="Поиск..." 
+                       HorizontalTextAlignment="Center" 
+                       ></SearchBar>
+            <ListView x:Name="lstPerformance" 
+                      HasUnevenRows="True"
+					    GroupDisplayBinding="{Binding Name}"
+                      ItemsSource="{Binding PerformancesGroupingValues}" 
+                      IsGroupingEnabled="True" Margin="20" 
+                      >
+                <ListView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Label Text="{Binding Name, StringFormat='{}{0:dd.MM}'}" FontSize="Large" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.GroupHeaderTemplate>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ctrl:FrameShadow Margin="5" Padding="0" HasShadow="False">
+                                <StackLayout Spacing="0" Orientation="Horizontal" VerticalOptions="FillAndExpand" >
+                                    <StackLayout Spacing="0" Padding="10, 5, 10, 0" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" WidthRequest="50">
+                                        <Label Text="{Binding StartDate,StringFormat='{}{0:HH:mm}'}"></Label>
+                                    </StackLayout>
+                                    <StackLayout Spacing="0" Padding="10, 5, 10, 0" VerticalOptions="CenterAndExpand" HorizontalOptions="Start">
+                                        <StackLayout Orientation="Vertical" Padding="0,0,0,10">
+                                            <Label Text="{Binding Title}" FontSize="Caption" />
+                                            <Label Text="{Binding Description}"  />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </StackLayout>
+                            </ctrl:FrameShadow>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

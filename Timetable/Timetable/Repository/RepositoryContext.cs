@@ -5,15 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using Timetable.Models.Athletes;
 using Timetable.Models.LearningGroups;
+using Timetable.Models.Performance;
 using Timetable.Models.Trainers;
 
 namespace Timetable.Repository
 {
-    public static class Repository
+    public  class RepositoryContext:IRepository
     {
-        public static List<Athlete> GetAthletes()
+        private List<Athlete> _athletes;
+        private List<Trainer> _trainers;
+        private List<LearningGroup> _learningGroup;
+        private List<Performance> _performances;
+
+        public RepositoryContext()
         {
-            return new List<Athlete>
+            this._athletes = new List<Athlete>
             {
                 new Athlete { Id = 1,  LName = "Попов", FName = "Петр" },
                 new Athlete { Id = 2,  LName = "Иванов", FName = "Петр" },
@@ -30,10 +36,7 @@ namespace Timetable.Repository
                 new Athlete { Id = 13, LName = "Алибаева", FName = "Гульнара" },
                 new Athlete { Id = 14, LName = "Плеханов", FName = "Павел" }
             };
-        }
-        public static List<Trainer> GetTrainers()
-        {
-            return new List<Trainer>
+            this._trainers = new List<Trainer>
             {
                 new Trainer{Id=1,LName="Заичков",  FName="Дмитрий"},
                 new Trainer{Id=2,LName="Петров",   FName="Павел"},
@@ -50,12 +53,7 @@ namespace Timetable.Repository
                 new Trainer{Id=13,LName="Смаилов",FName="Арман"},
                 new Trainer{Id=14,LName="Исин",FName="Айдар"}
             };
-        }
-        public static List<LearningGroup> GetLearningGroups()
-        {
-            var athletes = GetAthletes();
-            var trainers = GetTrainers();
-            var learningGroups =  new List<LearningGroup>
+            this._learningGroup = new List<LearningGroup>
             {
                 new LearningGroup{Id=1,  Name="ДЮСШ-1", AthletesId = new List<int>{1,2,3,4}, TrainersId = new List<int>{1,2 } },
                 new LearningGroup{Id=2,  Name="ДЮСШ-2", AthletesId = new List<int>{2,3}, TrainersId = new List<int>{3} },
@@ -72,11 +70,81 @@ namespace Timetable.Repository
                 new LearningGroup{Id=13, Name="УТГ4",AthletesId=new List<int>{13},TrainersId = new List<int>{10}},
                 new LearningGroup{Id=14, Name="УТГ5",AthletesId=new List<int>{14},TrainersId = new List<int>{11} }
             };
+            this._performances = new List<Performance>
+            {
+                new Performance
+                {
+                    Id = 1,
+                    Title = "Тренировка",
+                    Description = "Каждодневная тренировка с Пн по Пт",
+                    StartDate = DateTime.Today.AddHours(8),
+                    AthleteId = 1
+                },
+                new Performance
+                {
+                    Id = 2,
+                    Title = "Соревнования",
+                    Description = "Проверка навыков",
+                    StartDate = DateTime.Today.AddHours(10).AddMinutes(20),
+                    AthleteId = 1
+                },
+                 new Performance
+                {
+                    Id = 3,
+                    Title = "Соревнования",
+                    Description = "Проверка навыков",
+                    StartDate = DateTime.Today.AddDays(-3).AddHours(15).AddMinutes(15),
+                    AthleteId = 1
+                }
+            };
+        }
+
+        public  List<Athlete> GetAthletes()
+        {
+            return this._athletes;
+        }
+        public  List<Trainer> GetTrainers()
+        {
+            return this._trainers;
+        }
+        public  List<LearningGroup> GetLearningGroups()
+        {
+            var athletes = GetAthletes();
+            var trainers = GetTrainers();
+            var learningGroups = this._learningGroup;
 
             learningGroups.ForEach(l => l.Athletes = athletes.Where(x => l.AthletesId.Any(p => p == x.Id)).ToList());
             learningGroups.ForEach(l => l.Trainers = trainers.Where(x => l.TrainersId.Any(p => p == x.Id)).ToList());
 
             return learningGroups;
+        }
+        public List<Performance> GetPerformances()
+        {
+            return this._performances;
+        }
+        public bool AddPerformance(Performance performance)
+        {
+            try
+            {
+                this._performances.Add(performance);
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool DeletePerformance(int id)
+        {
+            var performance = this._performances.FirstOrDefault(p => p.Id == id);
+            if(performance != null)
+            {
+                this._performances.Remove(performance);
+                return true;
+            }
+
+            return false;
         }
     }
 }

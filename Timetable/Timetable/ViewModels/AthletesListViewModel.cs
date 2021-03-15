@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Timetable.Models.Athletes;
 using Timetable.Models.LearningGroups;
+using Timetable.Repository;
 using Timetable.Utils;
 using Xamarin.Forms;
 
@@ -14,6 +15,7 @@ namespace Timetable.ViewModels
 {
     public class AthletesListViewModel : INotifyPropertyChanged
     {
+        public IRepository _repository { get; set; }
         private List<Athlete> _athletes;
         private List<Athlete> _searchAthletes;
 
@@ -62,8 +64,9 @@ namespace Timetable.ViewModels
 
         public AthletesListViewModel()
         {
-            this.Athletes = Repository.Repository.GetAthletes();
-            this.LearningGroups = Repository.Repository.GetLearningGroups();
+            this._repository = new RepositoryContext();
+            this.Athletes =  this._repository.GetAthletes();
+            this.LearningGroups =  this._repository.GetLearningGroups();
             this.SearchLearningGroups = this.LearningGroups;
 
             InitAthleteGroups();
@@ -75,7 +78,7 @@ namespace Timetable.ViewModels
 
         public void Filtered(string searchText, LearningGroup filterGroup)
         {
-            var athletes = Repository.Repository.GetAthletes();
+            var athletes =  this._repository.GetAthletes();
 
             this.SearchLearningGroups = (filterGroup != null && filterGroup.Id != 0) 
                 ? new List<LearningGroup>{ filterGroup }

@@ -8,12 +8,13 @@ using Timetable.Models.LearningGroups;
 using Timetable.Models.Athletes;
 using Timetable.Models.Trainers;
 using Xamarin.Forms;
-
+using Timetable.Repository;
 
 namespace Timetable.ViewModels
 {
     public class LearningGroupListViewModel : INotifyPropertyChanged
     {
+        public IRepository _repository { get; set; }
         private List<LearningGroup> _learningGroups;
         private List<LearningGroup> _searchTrainers;
 
@@ -34,9 +35,10 @@ namespace Timetable.ViewModels
 
         public LearningGroupListViewModel()
         {
-            this.LearningGroups = Repository.Repository.GetLearningGroups();
-            var trainers = Repository.Repository.GetTrainers();
-            var athletes = Repository.Repository.GetAthletes();
+            this._repository = new RepositoryContext();
+            this.LearningGroups = this._repository.GetLearningGroups();
+            var trainers = this._repository.GetTrainers();
+            var athletes = this._repository.GetAthletes();
         }
 
         public void elSearch_TextChanged(object sender, TextChangedEventArgs e)
