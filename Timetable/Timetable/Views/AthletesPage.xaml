@@ -15,7 +15,9 @@
                        ></SearchBar>
             <ListView x:Name="lstAthletes" ItemsSource="{Binding AthleteGroups}" 
                       GroupDisplayBinding="{Binding Name}" 
-                      IsGroupingEnabled="True" Margin="20" >
+                      IsGroupingEnabled="True" Margin="20" 
+                      ItemTapped="LstAthletes_OnItemTapped"
+                      >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

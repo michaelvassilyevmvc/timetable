@@ -1,4 +1,5 @@
-﻿using Timetable.Models.LearningGroups;
+﻿using Timetable.Models.Athletes;
+using Timetable.Models.LearningGroups;
 using Timetable.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -41,6 +42,13 @@ namespace Timetable.Views
 
             pckLearningGroup.SelectedIndex = 0;
             elSearch.Text = string.Empty;
+        }
+
+        private void LstAthletes_OnItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            var athlete = e.Item as Athlete;
+            var athleteViewModel = new AthleteViewModel(athlete);
+            this.Navigation.PushAsync(new AthleteDetailPage(athleteViewModel));
         }
     }
 }

@@ -64,6 +64,7 @@ namespace Timetable.ViewModels
         {
             this.Athletes = Repository.Repository.GetAthletes();
             this.LearningGroups = Repository.Repository.GetLearningGroups();
+            this.SearchLearningGroups = this.LearningGroups;
 
             InitAthleteGroups();
 
