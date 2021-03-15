@@ -24,10 +24,10 @@ namespace Timetable.Views
 
         private void pckLearningGroup_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            var athletesListViewModel = (BindingContext as AthletesListViewModel);
+            //var athletesListViewModel = (BindingContext as AthletesListViewModel);
 
-            athletesListViewModel.SearchAthletes = (pckLearningGroup.SelectedItem as LearningGroup).Athletes;
-            lstAthletes.ItemsSource = athletesListViewModel.SearchAthletes;
+            //athletesListViewModel.SearchAthletes = (pckLearningGroup.SelectedItem as LearningGroup).Athletes;
+            //lstAthletes.ItemsSource = athletesListViewModel.SearchAthletes;
         }
     }
 }
