@@ -27,5 +27,11 @@ namespace Timetable.Models.LearningGroups
             Athletes = new List<Athlete>();
             Trainers = new List<Trainer>();
         }
+
+        public LearningGroup(string name) : this()
+        {
+            this.Name = name;
+            this.Id = 0;
+        }
     }
 }
